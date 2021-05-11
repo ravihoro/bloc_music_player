@@ -186,6 +186,15 @@ class NowPlayingView extends StatelessWidget {
                     children: [
                       InkWell(
                         child: Icon(
+                          Icons.shuffle,
+                          color: state.shuffle ? Colors.amber : Colors.white,
+                        ),
+                        onTap: () {
+                          context.read<NowPlayingCubit>().shuffle();
+                        },
+                      ),
+                      InkWell(
+                        child: Icon(
                           Icons.skip_previous,
                           color: Colors.white,
                           size: 30,
@@ -226,6 +235,13 @@ class NowPlayingView extends StatelessWidget {
                         onTap: () {
                           context.read<NowPlayingCubit>().next();
                         },
+                      ),
+                      InkWell(
+                        child: Icon(
+                          Icons.favorite,
+                          color: Colors.white,
+                        ),
+                        onTap: () {},
                       ),
                     ],
                   ),
