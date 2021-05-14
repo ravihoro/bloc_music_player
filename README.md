@@ -1,6 +1,6 @@
 # Bloc Music Player
 
-Music Player built using Flutter following BLoC architecture;
+Music Player built using Flutter following BLoC architecture.
 
 Video demo: https://drive.google.com/file/d/1D-YcD0u_WhigiG520CeZ8CxJc51x5qDz/view?usp=sharing
 
