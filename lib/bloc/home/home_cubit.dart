@@ -6,8 +6,10 @@ import 'package:meta/meta.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit({@required this.audioQuery, @required this.databaseHelper})
-      : super(InitialState());
+  HomeCubit({
+    @required this.audioQuery,
+    @required this.databaseHelper,
+  }) : super(InitialState());
   final FlutterAudioQuery audioQuery;
   final DatabaseHelper databaseHelper;
 
@@ -22,7 +24,12 @@ class HomeCubit extends Cubit<HomeState> {
       List<Song> songs = await databaseHelper.fetchSongs();
       List<Song> albums = await databaseHelper.fetchAlbums();
       List<Song> artists = await databaseHelper.fetchArtists();
-      emit(LoadedSongsState(songs: songs, albums: albums, artists: artists));
+
+      emit(LoadedSongsState(
+        songs: songs,
+        albums: albums,
+        artists: artists,
+      ));
     } catch (e) {
       emit(FailedSongsState(exception: e));
     }

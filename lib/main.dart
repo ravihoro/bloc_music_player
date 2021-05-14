@@ -1,3 +1,4 @@
+import 'package:bloc_music_player/bloc/favorites/favorites_cubit.dart';
 import 'package:bloc_music_player/bloc/home/home_cubit.dart';
 import 'package:bloc_music_player/bloc/now_playing/now_playing_cubit.dart';
 import 'package:bloc_music_player/services/database_helper.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DatabaseHelper databaseHelper = DatabaseHelper();
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<HomeCubit>(
@@ -26,13 +28,20 @@ class MyApp extends StatelessWidget {
           )..loadSongs(),
         ),
         BlocProvider<NowPlayingCubit>(
-          create: (context) => NowPlayingCubit(audioPlayer: AudioPlayer()),
+          create: (context) => NowPlayingCubit(
+            audioPlayer: AudioPlayer(),
+            databaseHelper: databaseHelper,
+          ),
         ),
         BlocProvider<ArtistCubit>(
           create: (context) => ArtistCubit(databaseHelper),
         ),
         BlocProvider<AlbumCubit>(
           create: (context) => AlbumCubit(databaseHelper),
+        ),
+        BlocProvider<FavoritesCubit>(
+          create: (context) =>
+              FavoritesCubit(databaseHelper: databaseHelper)..fetchFavorites(),
         ),
       ],
       child: Builder(

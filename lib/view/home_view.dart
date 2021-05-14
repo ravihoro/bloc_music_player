@@ -1,3 +1,5 @@
+import 'package:bloc_music_player/bloc/favorites/favorites_cubit.dart';
+import 'package:bloc_music_player/bloc/now_playing/now_playing_cubit.dart';
 import 'package:bloc_music_player/widgets/custom_bottom_bar.dart';
 import 'package:bloc_music_player/widgets/custom_list_tile.dart';
 import 'package:bloc_music_player/widgets/song_search.dart';
@@ -39,7 +41,7 @@ class HomeView extends StatelessWidget {
   Widget _songsList(BuildContext context, List<Song> songs, List<Song> albums,
       List<Song> artists) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         backgroundColor: Colors.grey[850],
         appBar: AppBar(
@@ -73,6 +75,9 @@ class HomeView extends StatelessWidget {
               Tab(
                 child: Text('Artists'),
               ),
+              Tab(
+                child: Text('Favorites'),
+              ),
             ],
           ),
         ),
@@ -98,13 +103,40 @@ class HomeView extends StatelessWidget {
               },
             ),
             ListView.builder(
-                itemCount: artists.length,
-                itemBuilder: (context, index) {
-                  return CustomListTile(
-                    song: artists[index],
-                    page: Pages.Artists,
-                  );
-                }),
+              itemCount: artists.length,
+              itemBuilder: (context, index) {
+                return CustomListTile(
+                  song: artists[index],
+                  page: Pages.Artists,
+                );
+              },
+            ),
+            BlocConsumer<FavoritesCubit, FavoritesState>(
+              listener: (context, state) {
+                if (state.favorites.length == 0) {
+                  context.read<NowPlayingCubit>().stop();
+                }
+              },
+              builder: (context, state) {
+                return state.favorites.length == 0
+                    ? Center(
+                        child: Text(
+                          'No favorites.',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount: state.favorites.length,
+                        itemBuilder: (context, index) {
+                          return CustomListTile(
+                            song: state.favorites[index],
+                            page: Pages.Favorites,
+                            songs: state.favorites,
+                          );
+                        },
+                      );
+              },
+            ),
           ],
         ),
         bottomNavigationBar: CustomBottomBar(),

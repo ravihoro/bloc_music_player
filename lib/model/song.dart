@@ -58,7 +58,7 @@ class Song {
     return map;
   }
 
-  Song fromMap(Map<String, dynamic> map) {
+  factory Song.fromMap(Map<String, dynamic> map) {
     return Song(
       id: map['id'],
       title: map['title'],
@@ -74,11 +74,11 @@ class Song {
     );
   }
 
-  List<Song> toList(List<Map<String, dynamic>> query) {
-    List<Song> songs = [];
-    for (Map map in query) {
-      songs.add(fromMap(map));
-    }
-    return songs;
-  }
+  // List<Song> toList(List<Map<String, dynamic>> query) {
+  //   List<Song> songs = [];
+  //   for (Map map in query) {
+  //     songs.add(fromMap(map));
+  //   }
+  //   return songs;
+  // }
 }

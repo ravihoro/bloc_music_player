@@ -9,7 +9,7 @@ class CustomBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<NowPlayingCubit, NowPlayingState>(
       builder: (context, state) {
-        return state.currentSong == null
+        return state.currentSong == null || state.currentSongsList.length == 0
             ? Container(
                 height: 0,
               )
